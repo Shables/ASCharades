@@ -7,7 +7,7 @@ from io import BytesIO
 
 API_KEY = 'zly3l2mBsLfAurF0WeMgPikzVwRptld3fxgdfTa3twh0TMVEXshF1305'
 potential_words = ["tree", "dog", "cat", "human", "whale", "fire", "water", "house", "barrel", "car", "truck", "mountain", "hamburger", "heart", "triangle", "square", "bird"]
-GAME_ROUND = 0
+GAME_ROUND = 1
 PLAYER_POINTS = 0
 MAX_ROUNDS = 10
 
@@ -99,9 +99,10 @@ def convert_to_ascii(image_url, round_word):
                 PLAYER_POINTS += 1
                 print("Good\n")
             else:
+                GAME_ROUND += 1
                 print("Nope, sorry. No points")
 
-    if GAME_ROUND == MAX_ROUNDS:
+    if GAME_ROUND <= MAX_ROUNDS:
         print(f"\n STARTING ROUND {GAME_ROUND} NOW")
         generate_word()
     else:
