@@ -1,6 +1,7 @@
 import sys
 import random
 import requests
+import time
 from colorama import init, Fore, Style
 init(autoreset=True)
 from PIL import Image
@@ -103,13 +104,17 @@ def convert_to_ascii(image_url, round_word):
             else:
                 GAME_ROUND += 1
                 print(Fore.RED + "Nope, sorry. No points")
+                time.sleep(1)
                 print(f"Correct Answer: {round_word}")
+                time.sleep(2)
 
     if GAME_ROUND <= MAX_ROUNDS:
-        print(f"\n STARTING ROUND {GAME_ROUND} NOW")
+        print(f"\nSTARTING ROUND {GAME_ROUND} NOW")
+        time.sleep(1)
         generate_word()
     else:
         print("Calculating Final Score...")
+        time.sleep(2)
         calculate_final_score(PLAYER_POINTS)
 
 
@@ -117,19 +122,21 @@ def convert_to_ascii(image_url, round_word):
 def calculate_final_score(PLAYER_POINTS):
     score_percentage = (PLAYER_POINTS / (MAX_ROUNDS * 3)) * 100
     print(f"Final Score: {PLAYER_POINTS} out of {(MAX_ROUNDS * 3)}\n")
+    time.sleep(2)
     if score_percentage >= 100:
-        print("\nWOW! A PERFECT SCORE!")
+        print(Fore.GREEN + "\nWOW! A PERFECT SCORE!")
     elif score_percentage >= 81 and score_percentage < 100:
-        print("\n Very good! Almost perfect :)")
+        print(Fore.GREEN + "\n Very good! Almost perfect :)")
     elif score_percentage >= 61 and score_percentage < 81:
-        print("\n A little more practice and you are going to crush it!")
+        print(Fore.YELLOW + "\n A little more practice and you are going to crush it!")
     elif score_percentage >= 41 and score_percentage < 61:
-        print("\nOof, well, ASCII is hard to read anyway")
+        print(Fore.YELLOW + "\nOof, well, ASCII is hard to read anyway")
     elif score_percentage >= 21 and score_percentage < 41:
-        print("\nYou probably wouldn't enjoy classic Dwarf Fortress...")
+        print(Fore.RED + "\nYou probably wouldn't enjoy classic Dwarf Fortress...")
     elif score_percentage >= 0 and score_percentage < 21:
-        print("\nWanna play something else? Maybe?")
+        print(Fore.RED + "\nWanna play something else? Maybe?")
 
+    time.sleep(2)
     user_choice1 = input("\n\n\nWanna play again? (Y/N): ").lower()
 
     if user_choice1 == 'y':
@@ -137,6 +144,7 @@ def calculate_final_score(PLAYER_POINTS):
         restart_game()
 
         print("Initializing New Game...")
+        time.sleep(2)
         generate_word()
 
 
