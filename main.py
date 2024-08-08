@@ -106,24 +106,25 @@ def convert_to_ascii(image_url, round_word):
         generate_word()
     else:
         print("Calculating Final Score...")
+        calculate_final_score(PLAYER_POINTS)
 
 
 # Calculate Final User Score
 def calculate_final_score(PLAYER_POINTS):
     score_percentage = (PLAYER_POINTS / (MAX_ROUNDS * 3)) * 100
-
+    print(f"Final Score: {PLAYER_POINTS} out of {(MAX_ROUNDS * 3)}")
     if score_percentage >= 100:
         print("\nWOW! A PERFECT SCORE!")
-        if score_percentage >= 81 and score_percentage < 100:
-            print("\n Very good! Almost perfect :)")
-            if score_percentage >= 61 and score_percentage < 81:
-                print("\n A little more practice and you are going to crush it!")
-                if score_percentage >= 41 and score_percentage < 61:
-                    print("\nOof, well, ASCII is hard to read anyway")
-                    if score_percentage >= 21 and score_percentage < 41:
-                        print("\nYou probably wouldn't enjoy classic Dwarf Fortress...")
-                        if score_percentage >= 0 and score_percentage < 21:
-                            print("\nWanna play something else? Maybe?")
+    elif score_percentage >= 81 and score_percentage < 100:
+        print("\n Very good! Almost perfect :)")
+    elif score_percentage >= 61 and score_percentage < 81:
+        print("\n A little more practice and you are going to crush it!")
+    elif score_percentage >= 41 and score_percentage < 61:
+        print("\nOof, well, ASCII is hard to read anyway")
+    elif score_percentage >= 21 and score_percentage < 41:
+        print("\nYou probably wouldn't enjoy classic Dwarf Fortress...")
+    elif score_percentage >= 0 and score_percentage < 21:
+        print("\nWanna play something else? Maybe?")
 
     user_choice1 = input("\n\n\nWanna play again? (Y/N): ").lower()
 
