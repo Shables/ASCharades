@@ -13,6 +13,7 @@ MAX_ROUNDS = 10
 
 # Main Menu
 def main_menu():
+    global GAME_ROUND, PLAYER_POINTS
     while True:
         print("# # # W E L C O M E # # #")
         user_input = input("Would you like to play a game? (Y/N): ").lower()
@@ -28,6 +29,7 @@ def main_menu():
 
 # Generate a word to search
 def generate_word():
+    global GAME_ROUND, PLAYER_POINTS
     round_word = random.choice(potential_words)
     SEARCH_TERM = round_word
 
@@ -42,10 +44,11 @@ def generate_word():
     image_url = data['photos'][0]['src']['original']
     print(image_url)
 
-    convert_to_ascii(image_url)
+    convert_to_ascii(image_url, round_word)
 
 
 def convert_to_ascii(image_url, round_word):
+    global GAME_ROUND, PLAYER_POINTS
     # Download the image
     response = requests.get(image_url)
     img = Image.open(BytesIO(response.content))
@@ -63,7 +66,7 @@ def convert_to_ascii(image_url, round_word):
     # Assign grayscale values to ASCII characters
     ascii_str = ''
     pixels = grayscale_img.getdata()
-    ascii_chars = ['@', '8', 'B', 'M', 'E', 'H', 'W', 'K', '#', 'S', '%', '?', '7', '5', '3', 'i', 'x', '*', '+', ';', ':', '-', '"', ',', '.']
+    ascii_chars = ['@', '8', 'B', 'M', 'E', 'H', 'W', 'K', '#', 'S', '%', '?', '7', '5', '3', 'i', 'x', 'a', 's', '*', '+', ';', ':', '-', '"', ',', '.']
     for pixel in pixels:
         ascii_str += ascii_chars[pixel // 10] # Map pixel value to ASCII character
 
@@ -82,7 +85,7 @@ def convert_to_ascii(image_url, round_word):
         PLAYER_POINTS += 3
         print("Congratulations! First Guess :)\n")
     else:
-        print("\nWRONG: Try again")
+        print("\nWRONG - Try again")
         user_guess2 = input("\nGuess 2: ")
         if user_guess2 == round_word:
             GAME_ROUND += 1
@@ -90,7 +93,7 @@ def convert_to_ascii(image_url, round_word):
             print("Nicely done\n")
         else:
             print("\nStill not correct, last chance")
-            user_guess3 = input("Guess 3: ")
+            user_guess3 = input("\nGuess 3: ")
             if user_guess3 == round_word:
                 GAME_ROUND += 1
                 PLAYER_POINTS += 1
@@ -133,6 +136,7 @@ def calculate_final_score(PLAYER_POINTS):
 
 
 def restart_game():
+    global GAME_ROUND, PLAYER_POINTS
     GAME_ROUND == 0
     PLAYER_POINTS == 0
 
