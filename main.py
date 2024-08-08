@@ -29,12 +29,6 @@ def main_menu():
         else:
             print("INVALID CHOICE: Please input either Y for Yes or N for No")
 
-def print(text):
-    print("\033[91m{}\033[oom".format(text))
-
-def print(text):
-    print("\033[92m{}\033[00m".format(text))
-
 # Generate a word to search
 def generate_word():
     global GAME_ROUND, PLAYER_POINTS
@@ -109,6 +103,7 @@ def convert_to_ascii(image_url, round_word):
             else:
                 GAME_ROUND += 1
                 print(Fore.RED + "Nope, sorry. No points")
+                print(f"Correct Answer: {round_word}")
 
     if GAME_ROUND <= MAX_ROUNDS:
         print(f"\n STARTING ROUND {GAME_ROUND} NOW")
@@ -121,7 +116,7 @@ def convert_to_ascii(image_url, round_word):
 # Calculate Final User Score
 def calculate_final_score(PLAYER_POINTS):
     score_percentage = (PLAYER_POINTS / (MAX_ROUNDS * 3)) * 100
-    print(f"Final Score: {PLAYER_POINTS} out of {(MAX_ROUNDS * 3)}")
+    print(f"Final Score: {PLAYER_POINTS} out of {(MAX_ROUNDS * 3)}\n")
     if score_percentage >= 100:
         print("\nWOW! A PERFECT SCORE!")
     elif score_percentage >= 81 and score_percentage < 100:
