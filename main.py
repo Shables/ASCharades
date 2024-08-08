@@ -1,12 +1,14 @@
 import sys
 import random
 import requests
+from colorama import init, Fore, Style
+init(autoreset=True)
 from PIL import Image
 from io import BytesIO
 
 
 API_KEY = 'zly3l2mBsLfAurF0WeMgPikzVwRptld3fxgdfTa3twh0TMVEXshF1305'
-potential_words = ["tree", "dog", "cat", "human", "whale", "fire", "water", "house", "barrel", "car", "truck", "mountain", "hamburger", "heart", "triangle", "square", "bird"]
+potential_words = ["tree", "dog", "cat", "human", "whale", "fire", "water", "house", "barrel", "car", "truck", "mountain", "hamburger", "heart", "triangle", "square", "bird", "human", "circle", "river", "bee", "sheep", "goat", "kangaroo"]
 GAME_ROUND = 1
 PLAYER_POINTS = 0
 MAX_ROUNDS = 10
@@ -26,6 +28,12 @@ def main_menu():
             sys.exit()
         else:
             print("INVALID CHOICE: Please input either Y for Yes or N for No")
+
+def print(text):
+    print("\033[91m{}\033[oom".format(text))
+
+def print(text):
+    print("\033[92m{}\033[00m".format(text))
 
 # Generate a word to search
 def generate_word():
@@ -66,7 +74,7 @@ def convert_to_ascii(image_url, round_word):
     # Assign grayscale values to ASCII characters
     ascii_str = ''
     pixels = grayscale_img.getdata()
-    ascii_chars = ['@', '8', 'B', 'M', 'E', 'H', 'W', 'K', '#', 'S', '%', '?', '7', '5', '3', 'i', 'x', 'a', 's', '*', '+', ';', ':', '-', '"', ',', '.']
+    ascii_chars = ['@', '8', 'B', 'M', 'E', 'H', 'W', 'K', '#', 'S', '%', '?', '7', '5', '3', 'i', 'x', 'a', 's', '*', '+', ';', ':', '-', '"', '_', ',', '.']
     for pixel in pixels:
         ascii_str += ascii_chars[pixel // 10] # Map pixel value to ASCII character
 
@@ -83,24 +91,24 @@ def convert_to_ascii(image_url, round_word):
     if user_guess1 == round_word:
         GAME_ROUND += 1
         PLAYER_POINTS += 3
-        print("Congratulations! First Guess :)\n")
+        print(Fore.GREEN + "Congratulations! First Guess :)\n")
     else:
-        print("\nWRONG - Try again")
+        print(Fore.RED + "\nWRONG - Try again")
         user_guess2 = input("\nGuess 2: ")
         if user_guess2 == round_word:
             GAME_ROUND += 1
             PLAYER_POINTS += 2
-            print("Nicely done\n")
+            print(Fore.GREEN + "Nicely done\n")
         else:
-            print("\nStill not correct, last chance")
+            print(Fore.RED + "\nStill not correct, last chance")
             user_guess3 = input("\nGuess 3: ")
             if user_guess3 == round_word:
                 GAME_ROUND += 1
                 PLAYER_POINTS += 1
-                print("Good\n")
+                print(Fore.GREEN + "Good\n")
             else:
                 GAME_ROUND += 1
-                print("Nope, sorry. No points")
+                print(Fore.RED + "Nope, sorry. No points")
 
     if GAME_ROUND <= MAX_ROUNDS:
         print(f"\n STARTING ROUND {GAME_ROUND} NOW")
@@ -139,8 +147,8 @@ def calculate_final_score(PLAYER_POINTS):
 
 def restart_game():
     global GAME_ROUND, PLAYER_POINTS
-    GAME_ROUND == 0
-    PLAYER_POINTS == 0
+    GAME_ROUND = 0
+    PLAYER_POINTS = 0
 
 
 # Main Loop
